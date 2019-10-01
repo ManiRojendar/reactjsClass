@@ -1,0 +1,64 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+
+<div id='root'></div>
+<script type='text/babel'>
+class Child  extends React.Component{
+    componentWillReceiveProps(a,b){
+        debugger;
+    }
+     render(){
+         return <h1>{this.props.n}</h1>
+     }
+}
+
+
+
+class App extends React.Component{
+       constructor(){
+           super();
+           console.log('consturctor');
+           this.state={
+               name:'sachin'
+           }
+           setTimeout(() => {
+                this.setState({
+                    'name':'dhoni'
+                })
+           }, 3000);
+           setTimeout(() => {
+                this.setState({
+                    'name':'kohli'
+                })
+           }, 6000);
+       }
+       render(){
+           console.log('render');
+           return <div>
+                     {this.state.name}
+                     <Child n={this.state.name} />
+                  </div>
+       }
+
+       componentWillMount(){
+           console.log('will mount');
+       }
+       componentDidMount(){
+           console.log('did mount');
+       }
+       componentWillUpdate(){
+           console.log('will update');
+       }
+       componentDidUpdate(){
+           console.log('did update');
+       }
+       shouldComponentUpdate(){
+           console.log('should update');
+           return true;
+       }
+
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>

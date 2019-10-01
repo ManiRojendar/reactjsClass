@@ -1,0 +1,41 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+<div id='root'></div>
+<script type='text/babel'>
+
+class Child extends React.Component{
+
+    fnSendData(){
+        debugger;
+        let name=this.refs.nameRef.value;
+        this.props.f(name);
+    }
+    render(){
+        return <h1>Child: <input ref="nameRef" /><input type='button' value='send data' onClick={this.fnSendData.bind(this)} /></h1>
+    }
+}
+
+class App extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            name:''
+        }
+       this.fnGetData= this.fnGetData.bind(this);
+    }
+
+    fnGetData(data){
+        debugger;
+        this.setState({
+            'name':data
+        })
+    }
+
+    render(){
+        return <div><h1>Parent:{this.state.name}  </h1><Child f={this.fnGetData} /></div>
+    }
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>

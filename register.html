@@ -1,0 +1,62 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+<div id='root'></div>
+<script type='text/babel'>
+
+class App extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            dataObj:{}
+        }
+    }
+
+    fnChange(e){
+        debugger;
+        let _val=e.target.type == 'checkbox' ? e.target.checked : e.target.value;
+        let _id=e.target.id;
+        this.setState({
+            dataObj:{
+                ...this.state.dataObj,
+                [_id]:_val
+            }
+        })
+    }
+    fnReg(){
+        console.log(this.state.dataObj);
+    }
+    render(){
+        return <div>
+                  <h1>Register</h1>
+                  <p>uid:<input id='u' onChange={this.fnChange.bind(this)} /></p>
+                  <p>pwd:<input id='p' type="password" onChange={this.fnChange.bind(this)}/></p>
+                  <p>Gender:<input id='gen' value='M' name="gen" type='radio' onChange={this.fnChange.bind(this)}/>Male<input value="F" id='gen' name='gen' type='radio' onChange={this.fnChange.bind(this)}/>female</p>
+                  <p>
+                     Hobbies: <input type='checkbox' id="isCric" onChange={this.fnChange.bind(this)}/> Cricket
+                     <input type='checkbox' id="isHoc" onChange={this.fnChange.bind(this)}/> Hockey
+                     <input type='checkbox' id="isFB" onChange={this.fnChange.bind(this)}/> FootBall
+                    </p>
+                  <p>
+                    Country: <select id="cou" onChange={this.fnChange.bind(this)}>
+                              <option value="1">India</option>
+                              <option value="2">Pak</option>
+                              <option value="3">China</option>
+                             </select>
+
+                    </p>
+                    <p>
+                        Address: <textarea id='add' onChange={this.fnChange.bind(this)}></textarea>
+                    </p>
+                    <p>
+                        Photo: <input type="file" id='photo' onChange={this.fnChange.bind(this)} />
+                    </p>
+                  <p>
+                      <input type='button' value='reg' onClick={this.fnReg.bind(this)} />
+                    </p>
+                </div>
+    }
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>

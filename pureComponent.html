@@ -1,0 +1,48 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+
+<div id='root'></div>
+<script type='text/babel'>
+
+const Child=React.memo((data)=>{
+    console.log('child rendered');
+    return <h1>{data.n}</h1>
+})
+
+// class Child  extends React.PureComponent{
+    
+//      render(){
+//          console.log('child rendered');
+//          return <h1>{this.props.n}</h1>
+//      }
+// }
+
+class App extends React.Component{
+       constructor(){
+           super();
+           console.log('consturctor');
+           this.state={
+               i:1
+           }
+           setInterval(() => {
+                this.setState({
+                    'i':1
+                })
+           }, 2000);
+           
+       }
+       render(){
+           //console.log('render');
+           return <div>
+                     {this.state.i}
+                     <Child n={this.state.i}  />
+                  </div>
+       }
+
+      
+
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>

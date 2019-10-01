@@ -1,0 +1,18 @@
+<script src="serverCall.js"></script>
+<input type="button" value="get users"  onclick="fnGetUsers()"/>
+<div id='result'></div>
+<script>
+    function fnGetUsers(){
+        fnSendReq(
+            'get',
+            'https://jsonplaceholder.typicode.com/users',
+            function(res){
+                debugger;
+                document.getElementById('result').innerText=JSON.stringify(res.pop());            },
+            function(res){
+                debugger;
+                alert(res);
+            }
+        );
+    }
+</script>

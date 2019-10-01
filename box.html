@@ -1,0 +1,36 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+<style>
+    .box {
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        border: 1px solid red;
+    }
+</style>
+<div id="root"></div>
+<script type="text/babel">
+
+    const Box=(data)=>{
+         return  <div className='box'>{data.n}</div>
+    }
+
+    const App=()=>{
+        return <div>
+                 <div>
+                    <Box n="1"  /> <Box n="2" /> <Box n="3" />
+                 </div>
+                 <div>
+                    <Box /> <Box /> <Box />
+                </div>
+                <div>
+                    <Box /> <Box /> <Box />
+                    </div>
+                 
+                </div>
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>

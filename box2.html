@@ -1,0 +1,43 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+<style>
+    .box{
+        width:30px;
+        height: 30px;
+        border: 1px solid red;
+        display: inline-block
+    }
+</style>
+<div id='root'></div>
+<script type='text/babel'>
+
+class Box extends React.Component{
+    constructor(){
+        super();
+        debugger;
+    }
+    render(){
+        return <div className="box">{this.props.n}</div> 
+    }
+}
+
+class App extends React.Component{
+    
+       render(){
+           return <div>
+                     <div>
+                        <Box n="1"   /><Box n='2'/><Box n='3' />
+                     </div>
+                     <div>
+                        <Box /><Box /><Box />
+                     </div>
+                     <div>
+                        <Box /><Box /><Box />
+                     </div>
+                  </div>
+       }
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>

@@ -1,0 +1,18 @@
+<script src="serverCall.js"></script>
+
+<input type="button" value="get posts"  onclick="fnGetPosts()"/>
+<div id='result'></div>
+<script>
+    function fnGetPosts(){
+        fnSendReq(
+            'get',
+            'https://jsonplaceholder.typicode.com/posts',
+            function(res){
+                document.getElementById('result').innerText=JSON.stringify(res[4]);
+            },
+            function(res){
+                alert(res);
+            }
+        );
+    }
+</script>

@@ -1,0 +1,69 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+
+<div id='root'></div>
+<script type='text/babel'>
+
+class ErrorHandling extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            hasErrors:false,
+        }
+    }
+
+    static getDerivedStateFromError(error) {
+       
+          return {
+              hasErrors:true
+          }
+    }
+    componentDidCatch(errInfo){
+        console.log('::::'+errInfo);
+    }
+    render(){
+       let data='';
+       if(this.state.hasErrors){
+          data="something went wrong";
+       }else{
+           data=this.props.children
+       }
+       return <div>{data}</div>
+    }
+}
+
+class Hero extends React.Component{
+    render(){
+
+        const {name}=this.props;
+        if(name == 'Joker'){
+            throw new Error('You are not a hero');
+        }
+        return <h1>My hero name is : {name}</h1>
+    }
+}
+
+class App extends React.Component{
+       constructor(){
+           super();
+       }
+       render(){
+           return <div>
+                    <ErrorHandling>
+                        <Hero name="Bat man" />
+                    </ErrorHandling>
+                    <ErrorHandling>
+                        <Hero name="Super man" />
+                    </ErrorHandling>
+                    <ErrorHandling>
+                        <Hero name="Joker" />
+                    </ErrorHandling>
+                  </div>
+       }
+
+
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>

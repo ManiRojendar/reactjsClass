@@ -1,0 +1,66 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+<style>
+    .box {
+        line-height: 30px;
+        width: 30px;
+        display: inline-block;
+        border: 1px solid red;
+        text-align: center;
+    }
+</style>
+<div id="root"></div>
+<script type="text/babel">
+
+    class Box extends React.Component{
+        constructor(){
+            super();
+            
+        }
+        fnChange(e){
+            debugger;
+            this.props.fnCompareData(e.target.innerText,e.target.id)
+        }
+        render(){
+            return <div id={this.props.n} className='box' onKeyUp={this.fnChange.bind(this)} contentEditable></div>
+        }
+    }
+
+
+
+    class App extends React.Component{
+        constructor(){
+            super();
+            this.state={
+                currVal:''
+            }
+            this.fnCompareData=this.fnCompareData.bind(this);
+        }
+
+        fnCompareData(data,id){
+            debugger;
+             if(this.state.currVal == data){
+                 alert('please enter another value');
+                 document.getElementById(id).innerText='';
+                 return;
+             } 
+             this.setState({
+                 'currVal':data
+             })
+        }
+        render(){
+        return <div>
+                 <div>
+                    <Box n="1" fnCompareData={this.fnCompareData} />
+                     <Box n="2" fnCompareData={this.fnCompareData} />
+                 </div>
+                 
+                 
+                </div>
+            }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>

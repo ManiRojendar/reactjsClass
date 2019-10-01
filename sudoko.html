@@ -1,0 +1,66 @@
+<h1>Sudoko game</h1>
+
+<script src="http://uijavakit.com/downloads/react/react.min.js"></script>
+
+<script src="http://uijavakit.com/downloads/react/react-dom.min.js"></script>
+
+<script src="http://uijavakit.com/downloads/react/babel.js"></script>
+
+<style>
+ .box{
+ 	width: 25px;
+ 	height: 25px;
+ 	display: inline-block;
+    border: 1px solid red;
+    text-align: center;
+    line-height: 25px;
+ }
+</style>
+<div id="root"></div>
+
+<script type="text/babel">
+	
+	class Box extends React.Component{
+
+	      fnChageInput(e){
+             if(!e.target.innerText){
+             	  return;
+               }
+             let outer=[["1","2","3"],["4","5","6"],["7","8","9"],["1","4","7"],["2","5","8"],["3","6","9"]];
+
+             for(var i=0;i< outer.length ;i++){
+             	 var inner=outer[i]; 
+                  var sum=0;
+             	 for(var j=0; j< inner.length ;j++){
+                    var id=inner[j];
+                    var val=Number(document.getElementById(id).innerText);
+                    sum=sum+val;
+             	}
+
+             	if(sum != 6){
+             		break;
+               }
+
+               if(i==5){
+               alert('you won');
+               window.location.reload();
+               }
+              
+             }
+
+	      }
+			render(){
+
+			   return <div className="box" id={this.props.id} contenteditable="true" onKeyUp={this.fnChageInput.bind(this)}></div>
+
+		     }
+    }
+	class App extends React.Component{
+			render(){
+
+			   return <div><div><Box id="1" /><Box id="2"/><Box id="3"/></div><div><Box id="4"/><Box id="5"/><Box id="6"/></div><div><Box id="7" /><Box id="8"/><Box id="9"/></div></div>
+
+		     }
+    }
+    ReactDOM.render(<App />,document.getElementById('root'));
+</script>

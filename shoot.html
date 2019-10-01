@@ -1,0 +1,213 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+<div id='root'></div>
+<style>
+    .board {
+        width: 500px;
+        height: 400px;
+        border: 1px solid red;
+        position: relative;
+    }
+
+    .baloon {
+
+        border-radius: 50%;
+        border: 1px solid red;
+        display: inline-block;
+        position: absolute;
+    }
+
+    .arrow {
+        width: 50px;
+        border: 2px solid blue;
+        display: inline-block;
+        position: absolute;
+
+    }
+    .baloon-active{
+        border: 1px solid blue !important;
+    }
+</style>
+<script type='text/babel'>
+class Score extends React.Component{
+    render(){
+        const {score,cl} = this.props;
+        return <div>
+                    <h1>Your score:{score} </h1>
+                    <h1>chances left:{cl}</h1>
+               </div>
+    }
+  
+}
+
+class Board extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            balInfo:null
+        }
+        this.fnGetBalInfo=this.fnGetBalInfo.bind(this);
+        this.fnReset=this.fnReset.bind(this);
+        this.fnGetData=this.fnGetData.bind(this);
+    }
+    fnGetBalInfo(balInfo){
+        debugger;
+        this.setState({
+            balInfo:balInfo
+        })
+    }
+    fnReset(){
+        this.setState({
+            balInfo:null
+        })
+    }
+
+    fnGetData(data){
+        debugger;
+      this.props.fnPreScore(data);
+    }
+    render(){
+      return <div className="board">
+               <Arrow  fnGetData={this.fnGetData} balInfo={this.state.balInfo} fnReset={this.fnReset} />
+               <Baloon  s="40" l="350" t="50"  fnGetBalInfo={this.fnGetBalInfo} />
+               <Baloon  s="80" l="250" t="100" fnGetBalInfo={this.fnGetBalInfo}/>
+               <Baloon  s="50" l="300" t="250" fnGetBalInfo={this.fnGetBalInfo}/>
+               <Baloon  s="70" l="420" t="300" fnGetBalInfo={this.fnGetBalInfo}/>
+            </div>
+    }
+  
+}
+
+class Baloon extends React.Component{
+
+    fnBalClick(e){
+        debugger;
+        let activeBaloon=document.getElementsByClassName('baloon-active')[0];
+        if(activeBaloon){
+            activeBaloon.classList.remove('baloon-active');
+        }
+        e.target.classList.add('baloon-active');
+        this.props.fnGetBalInfo(e.target);
+    }
+    render(){
+        const {s,l,t} = this.props;
+        return <div onClick={this.fnBalClick.bind(this)} className="baloon" style={{width:s,height:s,left:l,top:t}}></div>
+    }
+  
+}
+class Arrow extends React.Component{
+     constructor(){
+         super();
+         this.state={
+             t:0,
+             l:0
+         }
+         window.addEventListener('keyup',(e)=>{
+          debugger; 
+           // let balInfo=this.props.balInfo;
+            //handle enter button
+            if(e.keyCode == 13){
+                if(this.props.balInfo== null){
+                    alert('please select target baloon');
+                    return;
+                }
+                const {offsetHeight,offsetTop,offsetLeft} =this.props.balInfo;
+                const {t} =this.state;
+                if(t > offsetTop && t<(offsetTop+offsetHeight)){
+                    let targetLeft=offsetLeft-50;
+                    let interval=window.setInterval(() => {
+                        this.setState({
+                        l: this.state.l+1
+                     })
+                     if(this.state.l == targetLeft){
+                        clearInterval(interval);
+                        this.props.balInfo.style.display='none';
+                        this.props.fnReset();
+                        this.props.fnGetData(1);
+                        this.setState({
+                            'l':0,
+                            't':0
+                        })
+                     }
+                    }, 20);
+                    
+                }else{
+                    let targetLeft=450;
+                    let interval=window.setInterval(() => {
+                        this.setState({
+                        l: this.state.l+1
+                     })
+                     if(this.state.l == targetLeft){
+                        clearInterval(interval);
+                        this.props.fnGetData(0);
+                        this.setState({
+                            'l':0,
+                            't':0
+                        })
+                     }
+                    }, 20);
+                }
+            }
+
+            //handle Arrow Down button
+            if(e.keyCode == 40){
+                if(this.state.t != 400){
+                  this.setState({
+                      t:this.state.t+5
+                  })
+                }
+            }
+
+
+            //handle Arrow up button
+            if(e.keyCode == 38){
+                if(this.state.t != 0){
+                  this.setState({
+                      t:this.state.t-5
+                  })
+                }
+             }
+
+
+         })
+     }
+     render(){
+         return <div className="arrow" style={{top:this.state.t,left:this.state.l}}></div>
+     }
+  
+}
+
+class App extends React.Component{
+     constructor(){
+        super();
+        this.state={
+            score:0,
+            cl:2
+        }
+        this.fnPreScore=this.fnPreScore.bind(this);
+     }
+
+     fnPreScore(data){
+         debugger;
+        if(data == 1){
+            this.setState({
+                score:this.state.score+1
+            })
+        }else{
+            this.setState({
+                cl:this.state.cl-1
+            })
+        }  
+     }
+
+     render(){
+         return <div>
+                    <Board fnPreScore={this.fnPreScore}/>
+                    <Score score={this.state.score} cl={this.state.cl} />
+                 </div>
+     }
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>

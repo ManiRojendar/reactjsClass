@@ -1,0 +1,125 @@
+<h1>Tick Tak Toy game(Identifiers are 'x','y' )</h1>
+
+<script src="http://uijavakit.com/downloads/react/react.min.js"></script>
+
+<script src="http://uijavakit.com/downloads/react/react-dom.min.js"></script>
+
+<script src="http://uijavakit.com/downloads/react/babel.js"></script>
+
+<style>
+  .box {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    border: 1px solid red;
+    text-align: center;
+    line-height: 100px;
+  }
+
+</style>
+
+<div id="root"></div>
+
+<script type="text/babel">
+	
+	class Box extends React.Component{
+        
+	      fnChageInput(e){
+             var val=e.target.innerText;
+             var id=e.target.id;
+             if(!val){
+             	  return;
+               }
+            if(this.props.isFirst){
+              e.target.innerText='x';
+              val='x';
+            }
+           else{
+             e.target.innerText='y';
+              val='y';
+              }
+              
+            this.props.changeVal();
+            let outer=[["1","2","3","4","5","6"],["7","8","9","10","11","12"],["13","14","15","16","17","18"],["19","20","21","22","23","24"],["25","26","27","28","29","30"],["31","32","33","34","35","36"],
+
+            ["1","7","13","19","25","31"],["2","8","14","20","26","32"],["3","9","15","21","27","33"],["4","10","16","22","28","34"],["5","11","17","23","29","35"],["6","12","18","24","30","36"],
+            
+            ["1","8","15","22","29","36"],["6","11","16","21","26","31"]
+            
+                      
+            ];
+
+             let filterArr=outer.filter(function(v){
+                  return v.includes(id);
+             })
+
+             for(var i=0;i< filterArr.length ;i++){
+                var inner=filterArr[i];
+             	  var val1=document.getElementById(inner[0]).innerText;
+                var val2=document.getElementById(inner[1]).innerText;
+                var val3=document.getElementById(inner[2]).innerText;
+                var val4=document.getElementById(inner[3]).innerText;
+                var val5=document.getElementById(inner[4]).innerText;
+                var val6=document.getElementById(inner[5]).innerText;
+                if(val1 == val && val2== val && val3== val && val4 == val && val4== val && val6== val){
+                alert('you won');
+                window.location.reload();
+                break;
+              }
+             }
+
+	      }
+			render(){
+
+			   return <div className="box" id={this.props.id} contenteditable="true" onKeyUp={this.fnChageInput.bind(this)}></div>
+
+		     }
+    }
+	class App extends React.Component{
+      constructor(){
+        super();
+        this.state={
+          isFirst:true
+        }
+      }
+      fnChangeVal(){
+         this.setState({
+           isFirst:!this.state.isFirst
+         })
+      }
+			render(){
+
+			   return <div><div><Box id="1" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/><Box id="2" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} /><Box id="3" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} /><Box id="4" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} /><Box id="5" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} /><Box id="6" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} /></div><div><Box id="7" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} /><Box id="8"changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} />
+         <Box id="9" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} />
+         <Box id="10" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="11" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="12" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/></div><div>
+         <Box id="13" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="14" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="15" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="16" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} />
+         <Box id="17" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="18" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/></div><div>
+         <Box id="19" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="20" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="21" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="22" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="23" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="24" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/></div><div>
+         <Box id="25" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="26" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="27" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="28" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} />
+         <Box id="29" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="30" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/></div><div>
+         <Box id="31" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="32" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="33" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst} />
+         <Box id="34" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="35" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/>
+         <Box id="36" changeVal={this.fnChangeVal.bind(this)} isFirst={this.state.isFirst}/></div></div>
+
+		     }
+    }
+    ReactDOM.render(<App />,document.getElementById('root'));
+</script>

@@ -1,0 +1,23 @@
+<div>
+    <a>Home</a>
+    <a>About</a>
+
+    <a>Contact</a>
+
+</div>
+<script>
+  var btnRef=document.getElementsByTagName('div')[0];
+    btnRef.addEventListener(
+        'click',
+        function(eveObj){
+            debugger;
+            if(eveObj.target.tagName == 'A'){
+            var activeMenu=document.querySelector('[style]');
+            if(activeMenu){
+            activeMenu.removeAttribute('style');
+            }
+            eveObj.target.style.color='red';
+            }
+        }
+    )
+</script>

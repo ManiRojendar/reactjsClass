@@ -1,0 +1,84 @@
+<script src="react.development.js"></script>
+<script src="react-dom.development.js"></script>
+<script src="babel.js"></script>
+<style>
+    .box {
+        line-height: 30px;
+        width: 30px;
+        display: inline-block;
+        border: 1px solid red;
+        text-align: center;
+    }
+</style>
+<div id="root"></div>
+<script type="text/babel">
+
+    class Box extends React.Component{
+        constructor(){
+            super();
+            
+        }
+        fnChange(e){
+            const {innerText,id} =e.target;
+            let _val=innerText;
+            let _id=id;
+
+            if(_val == ''){
+                return ;
+            }
+            let outer=[['1','2','3'],['4','5','6'],['7','8','9'],['1','4','7'],['2','5','8'],['3','6','9'],['1','5','9'],['3','5','7']];
+            let filterOuter=outer.filter((v)=>{
+                  return v.includes(_id);
+            })
+            for(let i=0;i<filterOuter.length;i++){
+                let inner=filterOuter[i];
+               let _val1= document.getElementById(inner[0]).innerText;
+               let _val2= document.getElementById(inner[1]).innerText;
+               let _val3= document.getElementById(inner[2]).innerText;
+               if(_val1 == _val && _val2 == _val && _val3 == _val ){
+                   alert('you won');
+                   window.location.reload()
+                   break;
+               }
+            }
+            debugger;
+        }
+        render(){
+            return <div id={this.props.n} className='box' onKeyUp={this.fnChange.bind(this)} contentEditable></div>
+        }
+    }
+
+
+
+    class App extends React.Component{
+        constructor(){
+            super();
+                }
+
+       
+        render(){
+        return <div>
+                 <div>
+                    <Box n="1"  />
+                     <Box n="2"  />
+                     <Box n="3"  />
+                 </div>
+
+                 <div>
+                    <Box n="4"  />
+                     <Box n="5"  />
+                     <Box n="6"  />
+                 </div>
+                 <div>
+                    <Box n="7"  />
+                     <Box n="8"  />
+                     <Box n="9"  />
+                 </div>
+                 
+                </div>
+            }
+    }
+
+    ReactDOM.render(<App />,document.getElementById('root'));
+
+</script>

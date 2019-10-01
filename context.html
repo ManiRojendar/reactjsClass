@@ -1,0 +1,64 @@
+<script src='react.development.js'></script>
+<script src='react-dom.development.js'></script>
+<script src="babel.js"></script>
+
+<div id='root'></div>
+<script type='text/babel'>
+const nameCtx=React.createContext();
+class Child4  extends React.PureComponent{
+    
+    render(){
+        return <h1>
+           Child 4
+           <nameCtx.Consumer>
+               {
+                  (data)=>{
+                      return <span>{data}</span>
+                   }
+               }
+           </nameCtx.Consumer>
+        </h1>
+    }
+}
+class Child3  extends React.PureComponent{
+    
+    render(){
+        return <Child4 />
+    }
+}
+class Child2  extends React.PureComponent{
+    
+    render(){
+        return <Child3 />
+    }
+}
+
+class Child1  extends React.PureComponent{
+    
+     render(){
+         return <Child2 />
+     }
+}
+
+class App extends React.Component{
+       constructor(){
+           super();
+           this.state={
+               name:'sachin'
+           }
+       }
+       render(){
+           return <div>
+                   <nameCtx.Provider value={this.state.name}  >
+                     
+                     <Child1  />
+                   </nameCtx.Provider>
+                  </div>
+       }
+
+      
+
+}
+
+ReactDOM.render(<App />,document.getElementById('root'));
+</script>
